@@ -1,0 +1,36 @@
+{
+  "name": "sahut",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chatbot layanan pelanggan multi-channel (web, WhatsApp, Telegram, Discord) dengan basis pengetahuan per bisnis.",
+  "workspaces": [
+    "server",
+    "dashboard",
+    "widget"
+  ],
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "dev": "concurrently -k -n server,dashboard,widget -c green,blue,gray \"npm run dev -w server\" \"npm run dev -w dashboard\" \"npm run dev -w widget\"",
+    "build": "npm run build -w widget && npm run build -w dashboard && npm run build -w server",
+    "start": "npm run start -w server",
+    "seed": "npm run seed -w server",
+    "ingest": "npm run ingest -w server --",
+    "check:llm": "npm run check:llm -w server --silent",
+    "test": "npm run test -w server",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7"
+  },
+  "allowScripts": {
+    "onnxruntime-node@1.30.0": true,
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "protobufjs@7.6.6": true,
+    "baileys@7.0.0-rc14": true
+  }
+}

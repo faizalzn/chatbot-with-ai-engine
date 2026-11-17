@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+
+/*
+  Bahasa visual dashboard:
+  - Isi di atas putih, sisi navigasi abu-abu terang. Tidak ada gradasi atau bayangan pada kartu, pemisahnya garis tipis.
+  - Satu warna utama (hijau tua) untuk tindakan, kuning tua untuk hal yang menunggu perhatian staf, merah untuk hal yang menghapus.
+  - Sudut 8px untuk semua kontrol. Bayangan hanya dipakai lapisan yang mengambang (dialog, menu, pemberitahuan).
+*/
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+  --color-*: initial;
+  --color-white: #ffffff;
+
+  --color-ink: #16191d;
+  --color-ink-2: #48515a;
+  --color-ink-3: #68717a;
+
+  --color-line: #e3e6e9;
+  --color-line-strong: #cbd0d5;
+  --color-sunken: #f5f6f7;
+  --color-hover: #eceef0;
+
+  --color-brand: #14694f;
+  --color-brand-strong: #0f5440;
+  --color-brand-soft: #e8f3ee;
+  --color-brand-line: #b7d8cb;
+
+  --color-warn: #96480b;
+  --color-warn-solid: #b45309;
+  --color-warn-soft: #fdf2e1;
+  --color-warn-line: #f0d2a4;
+
+  --color-danger: #b42318;
+  --color-danger-strong: #8f1c13;
+  --color-danger-soft: #fdecea;
+  --color-danger-line: #f5c5c0;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.1rem;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.6rem;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.75rem;
+
+  --shadow-float: 0 12px 32px rgb(16 24 32 / 0.14), 0 2px 6px rgb(16 24 32 / 0.08);
+
+  --animate-pop: pop 0.14s ease-out;
+  --animate-fade: fade 0.14s ease-out;
+  --animate-slide: slide 0.18s ease-out;
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(4px) scale(0.985);
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes slide {
+    from {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--color-ink);
+    background: var(--color-white);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for],
+  summary {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  ::placeholder {
+    color: var(--color-ink-3);
+    opacity: 1;
+  }
+
+  ::selection {
+    background: var(--color-brand-line);
+  }
+}
+
+@layer components {
+  /* Kolom isian: satu gaya untuk input, textarea, dan sejenisnya. */
+  .field {
+    width: 100%;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 8px;
+    background: var(--color-white);
+    padding: 0.5rem 0.75rem;
+    color: var(--color-ink);
+    outline: none;
+    transition:
+      border-color 0.12s,
+      box-shadow 0.12s;
+  }
+
+  .field:hover {
+    border-color: #aeb5bc;
+  }
+
+  .field:focus,
+  .field:focus-visible {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgb(20 105 79 / 0.16);
+    outline: none;
+  }
+
+  .field[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
+  .field[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgb(180 35 24 / 0.14);
+  }
+
+  .field:disabled {
+    background: var(--color-sunken);
+    color: var(--color-ink-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

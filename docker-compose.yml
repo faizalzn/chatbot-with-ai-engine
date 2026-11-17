@@ -1,0 +1,21 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sahut
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Jalankan "npm run setup" dulu supaya file .env terisi}
+      POSTGRES_DB: sahut
+    ports:
+      # Hanya bisa diakses dari mesin ini, tidak dari jaringan.
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
+    volumes:
+      - sahut-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sahut -d sahut"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  sahut-db:
